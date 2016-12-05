@@ -63,7 +63,7 @@ main = Slides.app
         ,   """
             `Msg`s can be triggered by:
 
-            * Html
+            * Html events
             * Subscriptions (`Sub`s)
             * Cmds
             """
@@ -76,22 +76,27 @@ main = Slides.app
         [   """
             ```javascript
             var elmApp = Elm.Main.fullscreen();
-            setInterval(onTrigger, 2345)
+            setInterval(onTrigger, 2000)
 
             function onTrigger() {
                 elmApp.ports.ping.send("Ping! - " + new Date());
             }
             ```
-
+            """
+        ,   """
             ```elm
-            port ping : (String -> msg) -> Sub msg
-
             type Msg = PingIsTriggered String
+
+            port ping : (String -> msg) -> Sub msg
 
             subscriptions : Model -> Sub Msg
             subscriptions model =
                 ping PingIsTriggered
 
+            ```
+            """
+        ,   """
+            ```elm
             update : Msg -> Model -> ( Model, Cmd Msg )
             update msg model =
                 case msg of
@@ -104,9 +109,9 @@ main = Slides.app
     , mdFragments
         [   """
             Limits of ports:
+            - Only ONE port module (use a `Ports.elm`)
             - Can't pass functions
             - Can't pass union types
-            - Only ONE port module (use a `Ports.elm`)
 
             But you can pass `Json.Value`s!
             """
